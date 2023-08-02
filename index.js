@@ -1,5 +1,20 @@
 // import statements
-//create inquirer questions
+const mysql = require('mysql');
+const connection = mysql.createConnection({
+    host: 'localhost',
+
+    port: 3302,
+
+    user: 'root',
+
+    password: 'password',
+    database: 'business_db'
+});
+
+connection.connect(function(err) {
+    if (err) throw err;
+    //start function here
+})
 
 
 const viewAllEmployees = () => {
