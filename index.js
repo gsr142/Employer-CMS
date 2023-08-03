@@ -1,4 +1,5 @@
 // import statements
+const inquirer = require('inquirer')
 const mysql = require('mysql2');
 const db = mysql.createConnection(
     {
@@ -31,16 +32,38 @@ const viewAll = (input) => {
     //return to main menu
 }
 
-const addNewEmployee = (input) => {
-    db.query(`INSERT INTO employees (first_name, last_name, role_id, manager_id) 
-    VALUES (${input.first_name}, ${input.last_name}, ${input.role_id}, ${input.manager_id})`, function (err, res){
-        if (err) {
-            console.error();
+function addNewEmployee() {
+    inquirer.prompt([
+        {
+            name: 'first_name',
+            message: "Enter the employee's first name",
+            type: 'input'
+        },
+        {
+            name: 'last_name',
+            message: "Enter the employee's last name",
+            type: 'input'
+        },
+        {
+            name: 'role_id',
+            message: "Enter the employee's role ID",
+            type: 'input'
+        },
+        {
+            name: 'manager_id',
+            message: "Enter the employee's manager ID",
+            type: 'input'
         }
-        
-        return res;
-    
-    });
+
+    ]).then(function(input){
+        db.query("INSERT INTO employees SET ?", {
+            first_name: input.first_name,
+            last_name: input.last_name,
+            role_id: input.role_id,
+            manager_id: input.manager_id
+        })
+        viewAll('employees')
+    })
 }
 
 const addNewRole = () => {
@@ -53,10 +76,4 @@ const addNewRole = () => {
     //return to main menu
 }
 
-newEmp = {
-    'first_name': 'Greg',
-    'last_name': 'Richardson',
-    'role_id': 3,
-    'mananger_id': '1'
-}
-addNewEmployee(newEmp)
+
