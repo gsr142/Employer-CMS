@@ -1,6 +1,8 @@
 // import statements
 const inquirer = require('inquirer')
 const mysql = require('mysql2');
+const newEmpQuestions = require('./lib/questions.js')
+const newRoleQuestions = require('./lib/questions.js')
 const db = mysql.createConnection(
     {
         host: 'localhost',
@@ -14,10 +16,8 @@ const db = mysql.createConnection(
     });
 
 db.connect(function (err) {
-    if (err) throw err;
-    //start function here
-    
-})
+    if (err) throw err; 
+});
 
 
 function viewAll(input) {
@@ -33,29 +33,8 @@ function viewAll(input) {
 }
 
 function addNewEmployee() {
-    inquirer.prompt([
-        {
-            name: 'first_name',
-            message: "Enter the employee's first name",
-            type: 'input'
-        },
-        {
-            name: 'last_name',
-            message: "Enter the employee's last name",
-            type: 'input'
-        },
-        {
-            name: 'role_id',
-            message: "Enter the employee's role ID",
-            type: 'input'
-        },
-        {
-            name: 'manager_id',
-            message: "Enter the employee's manager ID",
-            type: 'input'
-        }
-
-    ]).then(function(input){
+    inquirer.prompt(newEmpQuestions)
+    .then(function(input){
         db.query("INSERT INTO employees SET ?", {
             first_name: input.first_name,
             last_name: input.last_name,
@@ -67,24 +46,7 @@ function addNewEmployee() {
 }
 
 function addNewRole() {
-    inquirer.prompt([
-        {
-            name: 'title',
-            message: "Enter the title of the new role",
-            type: 'input'
-        },
-        {
-            name: 'salary',
-            message: "Enter salary for this role",
-            type: 'input'
-        },
-        {
-            name: 'department_id',
-            message: "Enter the department ID for the new role",
-            type: 'input'
-        }
-
-    ]).then(function(input){
+    inquirer.prompt(newRoleQuestions).then(function(input){
         db.query("INSERT INTO roles SET ?", {
             title: input.title,
             salary: input.salary,
