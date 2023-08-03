@@ -66,14 +66,34 @@ function addNewEmployee() {
     })
 }
 
-const addNewRole = () => {
-    //ask the name of the role
-    //ask the salary 
-    //query departments
-    //ask department with list of choices
-    //write new data to db
-    //return confirmation message
-    //return to main menu
+function addNewRole() {
+    inquirer.prompt([
+        {
+            name: 'title',
+            message: "Enter the title of the new role",
+            type: 'input'
+        },
+        {
+            name: 'salary',
+            message: "Enter salary for this role",
+            type: 'input'
+        },
+        {
+            name: 'department_id',
+            message: "Enter the department ID for the new role",
+            type: 'input'
+        }
+
+    ]).then(function(input){
+        db.query("INSERT INTO roles SET ?", {
+            title: input.title,
+            salary: input.salary,
+            department_id: input.department_id
+        })
+        viewAll('roles')
+    })
 }
+
+
 
 
