@@ -20,7 +20,7 @@ db.connect(function (err) {
 })
 
 
-const viewAll = (input) => {
+function viewAll(input) {
     //query database based on user input. options are department, role, employee
     db.query(`SELECT * FROM ${input}`, function (err, res){
         if (err) {
@@ -94,6 +94,19 @@ function addNewRole() {
     })
 }
 
-
+function addNewDept(){
+    inquirer.prompt([
+        {
+            name: 'department_name',
+            message: 'Enter the new department',
+            type: 'input'
+        }
+    ]).then(function(input){
+        db.query("INSERT INTO departments SET ?", {
+            department_name: input.department_name
+        })
+        viewAll('departments')
+    })
+}
 
 
