@@ -1,9 +1,11 @@
 // import statements
 const inquirer = require('inquirer')
 const mysql = require('mysql2');
-const newEmpQuestions = require('./lib/questions.js')
-const newRoleQuestions = require('./lib/questions.js')
-const startUpQuestion = require('./lib/questions.js')
+const newEmpQuestions = require('./lib/questions/newEmployeeQuestions.js')
+const newRoleQuestions = require('./lib/questions/newRoleQuestions.js')
+const startUpQuestion = require('./lib/questions/startupQuestion.js')
+ 
+
 //set database
 const db = mysql.createConnection(
     {
@@ -24,7 +26,7 @@ db.connect(function (err) {
 function init () {
     inquirer.prompt(startUpQuestion)
     .then(function(input){
-       switch (input) {
+       switch (input.navigate) {
         case 'View all departments':
             viewAllDepts();
             break;
@@ -60,8 +62,9 @@ function viewAllDepts() {
         }
         //display results as a table instead of array of objs
         console.table(res);
+        init();
     });
-    //return to main menu
+    
 }
 
 function viewAllEmployees(){
@@ -73,6 +76,7 @@ function viewAllEmployees(){
             console.error();
         }
         console.table(res);
+        init();
     })
 
 }
@@ -86,6 +90,7 @@ function viewAllRoles(){
             console.error();
         }
         console.table(res);
+        init();
     })
 }
 
@@ -103,7 +108,8 @@ function addNewEmployee() {
 }
 
 function addNewRole() {
-    inquirer.prompt(newRoleQuestions).then(function(input){
+    inquirer.prompt(newRoleQuestions)
+    .then(function(input){
         db.query("INSERT INTO roles SET ?", {
             title: input.title,
             salary: input.salary,
@@ -124,7 +130,7 @@ function addNewDept(){
         db.query("INSERT INTO departments SET ?", {
             department_name: input.department_name
         })
-        viewAll('departments')
+        viewAllDepts()
     })
 }
 
