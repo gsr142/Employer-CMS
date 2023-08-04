@@ -1,10 +1,10 @@
 // import statements
-const inquirer = require('inquirer')
+const inquirer = require('inquirer');
 const mysql = require('mysql2');
-const newEmpQuestions = require('./lib/questions/newEmployeeQuestions.js')
-const newRoleQuestions = require('./lib/questions/newRoleQuestions.js')
-const startUpQuestion = require('./lib/questions/startupQuestion.js')
- 
+const newEmpQuestions = require('./lib/questions/newEmployeeQuestions.js');
+const newRoleQuestions = require('./lib/questions/newRoleQuestions.js');
+const startUpQuestion = require('./lib/questions/startupQuestion.js');
+const updateEmpQuestions = require('./lib/questions/updateEmployeeQuestions.js');
 
 //set database
 const db = mysql.createConnection(
@@ -133,5 +133,16 @@ function addNewDept(){
         viewAllDepts()
     })
 }
+
+function updateEmployee() {
+    inquirer.prompt(updateEmpQuestions)
+    .then(function(input) {
+        db.query(`UPDATE employees SET role_ID = ${parseInt(input.role_id.split('-'))}
+        WHERE id = ${parseInt(input.emp.split('-'))}`
+        )
+        viewAllEmployees();
+    })
+       
+    }
 
 init();
