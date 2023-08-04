@@ -1,5 +1,5 @@
 -- insert dept data into dept table
-INSERT INTO departments (deparment_name)
+INSERT INTO departments (department_name)
 VALUES ('Software'),
        ('Sales'),
        ('Advertising'),
