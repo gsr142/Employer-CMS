@@ -100,7 +100,7 @@ function addNewEmployee() {
         db.query("INSERT INTO employees SET ?", {
             first_name: input.first_name,
             last_name: input.last_name,
-            role_id: input.role_id,
+            role_id: parseInt(input.role_id.split('-')),
             manager_id: input.manager_id
         })
         viewAllEmployees()
