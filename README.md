@@ -14,6 +14,7 @@
   
 ## Description
 An application that runs from the Command Line, this allows an employer to track and update departments, roles, and employees. This is done using a MySQL database for data storage, and Inquirer to prompt the user for information. The data displays as a table in the Command Line.
+![image](./images/screenshot.png)
 
 ## Installation
 First, ensure that NodeJS and MySQL are installed on your machine. Clone the repository to your machine. Open a command line in the program's root directory and type 'npm install' to install the program dependencies. Installation is now complete.
@@ -25,7 +26,7 @@ Log into MySQL, and create the database by typing 'source db/schema.sql;'. Type 
 Create a pull request or contact me through GitHub or Email.
 
 ## Demo
-test
+View a demo of the application [here](https://watch.screencastify.com/v/PMnwuLCTtXTiJ0ZwnBj0).
 
 ## License
  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
